@@ -1,7 +1,14 @@
 import Teststation, { ITeststation } from "../entities/Teststation"
 import { v4 as UUID } from "uuid"
+import {sequelize} from "../Database"
+import QueryTypes from 'sequelize/types/lib/query-types'
 
 export class TeststationService {
+  /*
+    * TODO:
+    * We must add some validations for the payload prior to inserting
+    *
+    */
   public static create(station: ITeststation): Promise<Teststation> {
     const insertPayload: ITeststation = {
       id: UUID(),
@@ -14,6 +21,12 @@ export class TeststationService {
     return Teststation.findByPk(id)
   }
 
+  /*
+    * TODO:
+    * We must check later if the user, who requests to delete this
+    * actually has permissions to do so.
+    *
+    */
   public static async delete(id: string): Promise<void> {
     const maybeStation = await Teststation.findByPk(id)
 
@@ -26,5 +39,18 @@ export class TeststationService {
 
   public static findAll(): Promise<Teststation[]> {
     return Teststation.findAll()
+  }
+
+  public static findNearBy(lat: number, lon: number): Promise<Teststation[]> {
+    return sequelize.query(`
+       SELECT * FROM teststations
+       WHERE ST_Distance_Sphere(coordinates, ST_MakePoint(:lat,:lon)) <= 15*1000
+    `, {
+    replacements: { lat, lon },
+      model: Teststation,
+      mapToModel: true,
+      type: "SELECT"
+    })
+
   }
 }
