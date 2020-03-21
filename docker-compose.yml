@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   postgres:
-    image: postgres
+    image: mdillon/postgis
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password

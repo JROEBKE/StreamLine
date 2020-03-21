@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Teststations', {
+    return queryInterface.createTable('teststations', {
       id: {
         allowNull: false,
         autoIncrement: false,
@@ -22,6 +22,18 @@ module.exports = {
       },
       houseNumber: {
         type: Sequelize.STRING
+      },
+      coordinates: {
+        type: Sequelize.GEOMETRY('POINT', 4326)
+      },
+      openingTime: {
+        type: Sequelize.TIME
+      },
+      closingTime: {
+        type: Sequelize.TIME
+      },
+      capacity: {
+        type: Sequelize.INTEGER
       },
       stationType: {
         type: Sequelize.STRING
