@@ -1,4 +1,4 @@
-import { Table, Model, Column, PrimaryKey } from "sequelize-typescript";
+import { Table, Model, Column, PrimaryKey, DataType } from "sequelize-typescript";
 
 export enum TeststationType {
   DRIVE_IN = "DRIVE_IN",
@@ -12,10 +12,14 @@ export interface ITeststation{
   postCode: string
   street: string
   houseNumber: string
+  coordinates: number
+  openingTime: number
+  closingTime: number
+  capacity: number
   stationType: TeststationType
 }
 
-@Table
+@Table({modelName: 'teststations'})
 class Teststation extends Model<TeststationType> {
 
   @PrimaryKey
@@ -37,8 +41,21 @@ class Teststation extends Model<TeststationType> {
   @Column
   houseNumber: string
 
+  @Column({type: DataType.GEOGRAPHY})
+  coordinates: number
+
+  @Column
+  capacity: number
+
   @Column
   stationType: TeststationType
+
+  @Column({type: DataType.TIME})
+  openingTime: number
+
+  @Column({type: DataType.TIME})
+  closingTime: number
+
 }
 
 export default Teststation
