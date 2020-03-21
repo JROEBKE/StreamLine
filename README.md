@@ -1,5 +1,6 @@
 # StreamLine
 
+## Deutsch
 
 
 Teststationen in Deutschland wurden eingerichtet um Bürger auf das Corona Virus zu testen. Testen von Mitbürger:innen ist essentiell um der weiteren Ausbreitung des Viruses entgegenzuwirken. Maßnahmen in anderen Länder haben gezeigt, dass das strukturierte Testen hilft bei der weiteren Eindämmung des Viruses. Mit der Einrichtungen der derzeitigen Teststationen will die Regierung die Ketten von infizierten Leuten durchbrechen. Denn wer weiss, dass er das Virus in sich trägt muss sich in häusliche Quarantäne begeben, umso weitere Ansteckungen zu minimieren.
@@ -9,3 +10,22 @@ Was ist das Problem? Die Teststationen wurden von Menschen überlaufen die kein 
 Wer ist betroffen? Bürger:innen die Angst haben den Virus in sich zu tragen sind betroffen, da diese aus Unsicherheit vermehrt Testzentren und Arztpraxen aufsuchen. Aber auch die Bürger:innen die den Virus tatsächlich in sich tragen soll schneller geholfen werden. Es sollte daher ein automatisierter Dienst eingerichtet werden der diese Bürger hilft voneinander zu unterscheiden und genaue Anweisungen gibt wie sie sich zu verhalten haben. Zudem kommt, wer Negativ getestet wird muss eigentlich auch 14 Tage unter Quarantäne bleiben. Bei einem gut angelegten Selbsttest können solche Fehlentscheidungen vermieden werden. Das ist ein gewichtiger Vorteil des von uns vorgeschlagenen Systems. Wichtiges Personal in Firmen, Kommunen etc. wird nicht unnötig von der Arbeit abgehalten
 
 Lösungsansatz: Bürger:innen sollen über eine Applikation einen virtuellen Fragebogen ausfüllen oder mit hilfe eines Chatbots zu ihrer Gesundheitslage befragt werden. Dieser Fragebogen soll den betreffenden Bürger im Falle einer potentiellen Infektion weitervermitteln an das nächstgelegene Testzentrum (gegebenenfalls auch erst zu einer genaueren Diagnose an eine Arztpraxis). Über die App wird ein Termin für die Teststation gemacht. Die Teststation kommuniziert die Ergebnisse. Bei einer negativen Auswertung des Fragebogens wird die App dem Bürger Ratschläge zur Einhaltung der Hygienemassnahmen vermitteln. Bürger:innen können bei Zweifel oder Veränderung der Symptome jederzeit erneut den Fragebogen durchlaufen bzw. Wiederum Kontakt aufnehmen über den Chatbot. So werden unnötige Kontakte in Arztpraxen und Teststellen vermieden, was Potenzial für die wichtigen Untersuchungen schafft.
+
+## English
+
+Test stations have been set up in Germany to test citizens for the corona virus. Testing of fellow citizens is essential to counteract the further spread of the virus. Measures in other countries have shown that structured testing helps to further contain the virus. With the facilities of the current testing stations, the government wants to break the chains of infected people. After all, whoever knows that they are carrying the virus in them has to go into domestic quarantine, all the more so to minimize further infections.
+
+What's the problem? The test stations were overrun by people who could not present a prescription This led to a total shutdown of the stations. In addition, a lot of important and scarce test material was used needlessly. Currently there are not enough tests available to test all citizens. However, many citizens want to be sure at the first signs and therefore visit more doctors' offices and initially the test stations themselves. This has led and continues to lead to an overload of individual medical practices and their specialists, whose potential should be used elsewhere. In today's test centers, doctors must first issue a prescription to all patients under "suspected corona". This prescription is often forwarded by fax or e-mail to the appropriate test station. In the past few days, more and more people have been told that they have to wait a long time before infecting others, and that there is an increase in so-called "false negatives" (testing of citizens who do not carry a virus). The people in the individual test stations also suffer from the current situation. Citizens are insecure and often show an aggressive behavior towards the helpers.
+
+Who is affected? Citizens who are afraid to carry the virus are affected, as they are increasingly visiting test centers and medical practices out of insecurity. But also the citizens who actually carry the virus should be helped faster. An automated service should therefore be set up to help distinguish between these citizens and give them precise instructions on how to behave. In addition, those who are tested negative must actually remain in quarantine for 14 days. With a well-designed self-test such wrong decisions can be avoided. This is a major advantage of the system we propose. Important personnel in companies, communities etc. are not unnecessarily kept from their work
+
+Approach: Citizens should fill out a virtual questionnaire via an application or be asked about their health situation with the help of a chat offer. In case of a potential infection, this questionnaire should be sent to the nearest test center (or, if necessary, to a doctor's office for a more precise diagnosis). An appointment for the test center is made via the app. The test station communicates the results. In the event of a negative evaluation of the questionnaire, the app will give advice to the citizen on how to comply with hygiene measures. If there is any doubt or if symptoms change, citizens can always go through the questionnaire again or contact the chat bot again. This avoids unnecessary contacts in doctors' practices and test centers, which creates potential for the important examinations.
+
+## How to Run
+todo
+
+## How to Build
+todo 
+
+## How to contribute
+todo
