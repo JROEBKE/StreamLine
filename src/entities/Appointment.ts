@@ -27,7 +27,7 @@ class Appointment extends Model<IAppointment> {
   teststation: string
 
 
-  @Column
+  @Column({type: DataType.DATE})
   timeslot: string
 
   @Column

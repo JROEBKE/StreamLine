@@ -16,7 +16,7 @@ module.exports = {
         }
       },
       timeslot: {
-        type: Sequelize.STRING
+        type: Sequelize.TIMESTAMP
       },
       patientIdentifier: {
         type: Sequelize.STRING

@@ -9,7 +9,7 @@
     "start": "node -r module-alias/register ./dist",
     "start:dev": "NODE_ENV=development nodemon --config nodemon.json",
     "test": "nodemon --config nodemon.test.json",
-    "migrate": "sequelize-cli db:migrate"
+    "migrate": "NODE_ENV=development sequelize-cli db:migrate"
   },
   "_moduleAliases": {
     "@daos": "dist/daos",
