@@ -1,4 +1,5 @@
-import { Table, Model, Column, PrimaryKey, DataType } from "sequelize-typescript";
+import { Table, Model, Column, PrimaryKey, DataType, BelongsTo } from "sequelize-typescript";
+import Teststation from './Teststation';
 
 
 

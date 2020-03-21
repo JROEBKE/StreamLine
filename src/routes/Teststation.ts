@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { CREATED, OK, NO_CONTENT } from 'http-status-codes';
 import {TeststationService} from "../services/TeststationService"
-
+import {AppointmentService} from "../services/AppointmentService"
 
 // Init shared
 const router = Router();
@@ -29,9 +29,8 @@ router.delete<{id: string}>('/:id', async (req: Request, res: Response) => {
 });
 
 router.get('/nearBy/:lat/:lon', async (req: Request, res: Response) => {
-  /*
-   * TODO: Validate user input. This explodes, when the coordinate is NaN
-   */
+  //TODO: Validate user input. This explodes, when the coordinate is NaN
+
   const result = await TeststationService.findNearBy(parseFloat(req.params.lat), parseFloat(req.params.lon))
   return res.json(result);
 });
@@ -40,8 +39,8 @@ router.get('/nearBy/:lat/:lon', async (req: Request, res: Response) => {
 // === Appointment routes ===
 //router.use('/:id/appointment/', AppoinRouter);
 
-router.post('/:stationId/appointment', async (req: Request, res: Response) => {
-  await AppointmentService.create(req.body)
+router.post('/:id/appointment', async (req: Request, res: Response) => {
+  await AppointmentService.create(req.body, req.params.id)
   return res.status(CREATED).end();
 });
 
