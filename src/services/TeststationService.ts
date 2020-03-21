@@ -12,7 +12,12 @@ export class TeststationService {
   public static create(station: ITeststation): Promise<Teststation> {
     const insertPayload: ITeststation = {
       ...station,
-      id: UUID()
+      id: UUID(),
+      coordinates: {
+        type: "POINT",
+        coordinates: station.coordinates,        
+        crs: { "type": "name", "properties": { "name": "EPSG:4326"}}
+      }
     }
     return Teststation.create(insertPayload)
   }

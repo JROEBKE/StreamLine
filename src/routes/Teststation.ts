@@ -44,17 +44,17 @@ router.post('/:id/appointment', async (req: Request, res: Response) => {
   return res.status(CREATED).end();
 });
 
-router.get('/:stationId/appointment', async (req: Request, res: Response) => {
+router.get('/:id/appointment', async (req: Request, res: Response) => {
   const result = await AppointmentService.findAll()
   return res.json(result);
 });
 
-router.get<{id: string}>('/:stationId/appointment/:id', async (req: Request, res: Response) => {
+router.get<{id: string}>('/:id/appointment/:id', async (req: Request, res: Response) => {
   const result = await AppointmentService.find(req.params.id)
   return res.json(result);
 });
 
-router.delete<{id: string}>('/:stationId/appointment/:id', async (req: Request, res: Response) => {
+router.delete<{id: string}>('/:id/appointment/:id', async (req: Request, res: Response) => {
   await AppointmentService.delete(req.params.id)
   return res.status(NO_CONTENT).end();
 ;

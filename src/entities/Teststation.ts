@@ -12,7 +12,8 @@ export interface ITeststation{
   postCode: string
   street: string
   houseNumber: string
-  coordinates: number
+  //TODO to be refactored
+  coordinates: any
   openingTime: number
   closingTime: number
   capacity: number

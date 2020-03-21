@@ -1,4 +1,4 @@
-import { Table, Model, Column, PrimaryKey, DataType, BelongsTo } from "sequelize-typescript";
+import { Table, Model, Column, PrimaryKey, DataType, ForeignKey } from "sequelize-typescript";
 import Teststation from './Teststation';
 
 
@@ -23,8 +23,8 @@ class Appointment extends Model<IAppointment> {
   id: string
 
   @Column
-  @BelongsTo(() => Teststation)
-  stationId: string
+  @ForeignKey(() => Teststation)
+  teststation: string
 
 
   @Column
