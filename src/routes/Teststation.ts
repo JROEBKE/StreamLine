@@ -36,6 +36,13 @@ router.get('/nearBy/:lat/:lon', async (req: Request, res: Response) => {
 });
 
 
+router.get('/nearByAndSpare/:lat/:lon', async (req: Request, res: Response) => {
+  //TODO: Validate user input. This explodes, when the coordinate is NaN
+
+  const result = await TeststationService.findNearByAndSpare(parseFloat(req.params.lat), parseFloat(req.params.lon))
+  return res.json(result);
+});
+
 // === Appointment routes ===
 //router.use('/:id/appointment/', AppoinRouter);
 
