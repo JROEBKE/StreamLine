@@ -71,17 +71,14 @@ export class TeststationService {
     WHERE
       ST_DistanceSphere(coordinates, ST_MakePoint(:lat,:lon)) <= 15 * 1000
     GROUP BY teststations.id, appointments.timeslot
-    HAVING 
+    HAVING
     COALESCE(date(appointments.timeslot),date(now())) = date(now())
     AND
-    COUNT(appointments.teststation) < teststations.capacity 
-
+    COUNT(appointments.teststation) < teststations.capacity
     `, {
-    replacements: { lat, lon },
-      //model: Teststation,
-      //mapToModel: true,
+      replacements: { lat, lon },
       type: "SELECT"
-    })
+    }) as Promise<Teststation[]>
 
   }
 }
