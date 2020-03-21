@@ -44,7 +44,7 @@ export class TeststationService {
   public static findNearBy(lat: number, lon: number): Promise<Teststation[]> {
     return sequelize.query(`
        SELECT * FROM teststations
-       WHERE ST_Distance_Sphere(coordinates, ST_MakePoint(:lat,:lon)) <= 15*1000
+       WHERE ST_DistanceSphere(coordinates, ST_MakePoint(:lat,:lon)) <= 15*1000
     `, {
     replacements: { lat, lon },
       model: Teststation,
