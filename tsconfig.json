@@ -11,6 +11,7 @@
     "sourceMap": true,
     "strict": true,
     "target": "es6",
+    "strictPropertyInitialization": false,
     "moduleResolution": "node",
     "paths": {
       "@daos/*": [
