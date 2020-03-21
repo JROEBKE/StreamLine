@@ -28,4 +28,12 @@ router.delete<{id: string}>('/:id', async (req: Request, res: Response) => {
 ;
 });
 
+router.get('/nearBy/:lat/:lon', async (req: Request, res: Response) => {
+  /*
+   * TODO: Validate user input. This explodes, when the coordinate is NaN
+   */
+  const result = await TeststationService.findNearBy(parseFloat(req.params.lat), parseFloat(req.params.lon))
+  return res.json(result);
+});
+
 export default router;
