@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { CREATED, OK } from 'http-status-codes';
+import { CREATED, OK, NO_CONTENT } from 'http-status-codes';
 import {TeststationService} from "../services/TeststationService"
 
 
@@ -8,7 +8,7 @@ const router = Router();
 
 
 router.post('/', async (req: Request, res: Response) => {
-  const result = await TeststationService.create(req.body)
+  await TeststationService.create(req.body)
   return res.status(CREATED).end();
 });
 
@@ -17,5 +17,15 @@ router.get('/', async (req: Request, res: Response) => {
   return res.json(result);
 });
 
+router.get<{id: string}>('/:id', async (req: Request, res: Response) => {
+  const result = await TeststationService.find(req.params.id)
+  return res.json(result);
+});
+
+router.delete<{id: string}>('/:id', async (req: Request, res: Response) => {
+  await TeststationService.delete(req.params.id)
+  return res.status(NO_CONTENT).end();
+;
+});
 
 export default router;
