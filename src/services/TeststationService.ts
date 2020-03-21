@@ -11,8 +11,8 @@ export class TeststationService {
     */
   public static create(station: ITeststation): Promise<Teststation> {
     const insertPayload: ITeststation = {
-      id: UUID(),
-      ...station
+      ...station,
+      id: UUID()
     }
     return Teststation.create(insertPayload)
   }

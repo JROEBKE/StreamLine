@@ -36,4 +36,31 @@ router.get('/nearBy/:lat/:lon', async (req: Request, res: Response) => {
   return res.json(result);
 });
 
+
+// === Appointment routes ===
+//router.use('/:id/appointment/', AppoinRouter);
+
+router.post('/:stationId/appointment', async (req: Request, res: Response) => {
+  await AppointmentService.create(req.body)
+  return res.status(CREATED).end();
+});
+
+router.get('/:stationId/appointment', async (req: Request, res: Response) => {
+  const result = await AppointmentService.findAll()
+  return res.json(result);
+});
+
+router.get<{id: string}>('/:stationId/appointment/:id', async (req: Request, res: Response) => {
+  const result = await AppointmentService.find(req.params.id)
+  return res.json(result);
+});
+
+router.delete<{id: string}>('/:stationId/appointment/:id', async (req: Request, res: Response) => {
+  await AppointmentService.delete(req.params.id)
+  return res.status(NO_CONTENT).end();
+;
+});
+
+
+
 export default router;
