@@ -12,7 +12,12 @@ export class TeststationService {
   public static create(station: ITeststation): Promise<Teststation> {
     const insertPayload: ITeststation = {
       ...station,
-      id: UUID()
+      id: UUID(),
+      coordinates: {
+        type: "POINT",
+        coordinates: station.coordinates,        
+        crs: { "type": "name", "properties": { "name": "EPSG:4326"}}
+      }
     }
     return Teststation.create(insertPayload)
   }
@@ -44,7 +49,7 @@ export class TeststationService {
   public static findNearBy(lat: number, lon: number): Promise<Teststation[]> {
     return sequelize.query(`
        SELECT * FROM teststations
-       WHERE ST_Distance_Sphere(coordinates, ST_MakePoint(:lat,:lon)) <= 15*1000
+       WHERE ST_DistanceSphere(coordinates, ST_MakePoint(:lat,:lon)) <= 15*1000
     `, {
     replacements: { lat, lon },
       model: Teststation,
