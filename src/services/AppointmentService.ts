@@ -10,9 +10,10 @@ export class AppointmentService {
     *
     */
   public static create(appointment: IAppointment, stationId: string): Promise<Appointment> {
-  
+
     const insertPayload: IAppointment = {
       ...appointment,
+      stationId: stationId,
       id: UUID()
     }
     return Appointment.create(insertPayload)

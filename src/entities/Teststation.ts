@@ -56,8 +56,8 @@ class Teststation extends Model<TeststationType> {
   @Column({type: DataType.TIME})
   closingTime: number
 
-  @HasMany(() => Appointment)
-  appointments: Appointment[];
+  //@HasMany(() => Appointment)
+  //appointments: Appointment[];
 
 }
 
