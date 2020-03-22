@@ -2,6 +2,8 @@ import { Request, Response, Router } from 'express';
 import { CREATED, OK, NO_CONTENT } from 'http-status-codes';
 import {TeststationService} from "../services/TeststationService"
 import {AppointmentService} from "../services/AppointmentService"
+import dayjs from "dayjs";
+
 
 // Init shared
 const router = Router();
@@ -43,30 +45,37 @@ router.get('/nearByAndSpare/:lat/:lon', async (req: Request, res: Response) => {
   return res.json(result);
 });
 
-// === Appointment routes ===
-//router.use('/:id/appointment/', AppoinRouter);
+// This route to achieve workload for a single station for a sepcific date by providing offset from today, if date not set than today
+router.get<{id: string}>('/:id/workload/:date', async (req: Request, res: Response) => {
+  const result = await TeststationService.workloadSingleStation(req.params.id, req.params.date)
+  return res.json(result);
+});
 
-router.post('/:id/appointment', async (req: Request, res: Response) => {
-  await AppointmentService.create(req.body, req.params.id)
+
+// === Appointment routes ===
+
+
+router.post('/:stationId/appointment', async (req: Request, res: Response) => {
+  await AppointmentService.create(req.body, req.params.stationId)
   return res.status(CREATED).end();
 });
 
-router.get('/:id/appointment', async (req: Request, res: Response) => {
-  const result = await AppointmentService.findAll()
+router.get('/:stationId/appointment', async (req: Request, res: Response) => {
+  //TODO validation fo query parameter
+  const result = await AppointmentService.findAll(req.params.stationId, req.query.slot)
   return res.json(result);
 });
 
-router.get<{id: string}>('/:id/appointment/:id', async (req: Request, res: Response) => {
-  const result = await AppointmentService.find(req.params.id)
+
+router.get<{id: string}>('/:stationId/appointment/:appointmentId', async (req: Request, res: Response) => {
+  const result = await AppointmentService.find(req.params.appointmentId)
   return res.json(result);
 });
 
-router.delete<{id: string}>('/:id/appointment/:id', async (req: Request, res: Response) => {
-  await AppointmentService.delete(req.params.id)
+router.delete<{id: string}>('/:stationId/appointment/:appointmentId', async (req: Request, res: Response) => {
+  await AppointmentService.delete(req.params.appointmentId)
   return res.status(NO_CONTENT).end();
 ;
 });
-
-
 
 export default router;

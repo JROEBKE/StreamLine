@@ -1,5 +1,6 @@
 import Appointment, { IAppointment } from "../entities/Appointment"
 import { v4 as UUID } from "uuid"
+import {sequelize} from "../Database"
 
 export class AppointmentService {
   /*
@@ -36,8 +37,41 @@ export class AppointmentService {
     }
   }
 
-  public static findAll(): Promise<Appointment[]> {
-    return Appointment.findAll()
+
+
+  // Get all appointments for single station on specific date aka slot if provided
+  
+  public static async findAll(id: string, slot: string): Promise<Appointment[]> {
+    console.log(slot)
+
+    if (slot) {   
+      return sequelize.query(`
+        SELECT *
+        FROM appointments
+        WHERE date(appointments.timeslot) = date(:slot)
+        AND teststation = :id
+        `, {
+        replacements: { id, slot },
+        model: Appointment,
+        mapToModel: true,
+        type: "SELECT"
+        }
+      )
+    } else {
+      //ToDo just for a single station ID
+      return sequelize.query(`
+        SELECT *
+        FROM appointments
+        WHERE teststation = :id
+        `, {
+        replacements: { id },
+        model: Appointment,
+        mapToModel: true,
+        type: "SELECT"
+        }
+      )
+    }
+    
   }
 
 }

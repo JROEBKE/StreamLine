@@ -2,6 +2,7 @@ import Teststation, { ITeststation } from "../entities/Teststation"
 import { v4 as UUID } from "uuid"
 import {sequelize} from "../Database"
 import dayjs from "dayjs";
+import { AppointmentService } from './AppointmentService';
 
 export class TeststationService {
   /*
@@ -74,27 +75,59 @@ export class TeststationService {
     return result
   }
 
+
+  //TODO sort by distance and workload
+
   public static findNearByAndSpare(lat: number, lon: number, offset: number=0): Promise<Teststation[]> {
     let offsetStatement = offset + ' day'
     return sequelize.query(`
-    SELECT
-      distinct(teststations.*),  COUNT(appointments.teststation) as appointments
-    FROM
-      teststations
-      LEFT JOIN appointments ON teststations.id = appointments.teststation
+      SELECT
+        distinct(teststations.*),  COUNT(appointments.teststation) as appointments
+      FROM
+        teststations
+        LEFT JOIN appointments ON teststations.id = appointments.teststation
+        AND
+        date(appointments.timeslot) = date(NOW() + interval :offsetStatement)
+      WHERE
+        ST_DistanceSphere(coordinates, ST_MakePoint(:lat, :lon)) <= 15 * 1000
+      GROUP BY teststations.id, appointments.timeslot
+      HAVING
+      COALESCE(date(appointments.timeslot),date(NOW() + interval :offsetStatement)) = date(NOW() + interval :offsetStatement)
       AND
-      date(appointments.timeslot) = date(NOW() + interval :offsetStatement)
-    WHERE
-      ST_DistanceSphere(coordinates, ST_MakePoint(:lat, :lon)) <= 15 * 1000
-    GROUP BY teststations.id, appointments.timeslot
-    HAVING
-    COALESCE(date(appointments.timeslot),date(NOW() + interval :offsetStatement)) = date(NOW() + interval :offsetStatement)
-    AND
-    COUNT(appointments.teststation) < teststations.capacity
-    `, {
+      COUNT(appointments.teststation) < teststations.capacity
+      `, {
       replacements: { lat, lon, offsetStatement },
       type: "SELECT"
     }) as Promise<Teststation[]>
 
   }
+  
+
+  public static async workloadSingleStation(id: string, date: string): Promise<Teststation[]> {
+    
+    //ToDo validation of input if in correct format
+
+     return sequelize.query(`
+      SELECT
+        teststations.*,  COUNT(appointments.teststation) as appointments
+      FROM
+        teststations
+        LEFT JOIN appointments ON teststations.id = appointments.teststation
+        AND
+        date(appointments.timeslot) = date(:date)
+      WHERE
+      teststations.id = :id
+      GROUP BY teststations.id
+      `, {
+      replacements: { date, id },
+      model: Teststation,
+      mapToModel: true,
+      type: "SELECT"
+    })
+
+  }
+
+
+
+
 }
