@@ -1,8 +1,9 @@
 import { Request, Response, Router } from 'express';
 import { CREATED, OK, NO_CONTENT } from 'http-status-codes';
-import {TeststationService} from "../services/TeststationService"
-import {AppointmentService} from "../services/AppointmentService"
-import dayjs from "dayjs";
+import {TeststationService} from "../services/TeststationService";
+import {AppointmentService} from "../services/AppointmentService";
+//import {TestdataService} from "../services/TestdataService"
+
 
 
 // Init shared
@@ -78,4 +79,21 @@ router.delete<{id: string}>('/:stationId/appointment/:appointmentId', async (req
 ;
 });
 
+
+// === Testdata routes ====
+
+/*
+router.get('/createStations', async (req: Request, res: Response) => {
+  const result = await TestdataService.createStations()
+  return res.json(result);
+});
+
+
+router.get('/createAppointments', async (req: Request, res: Response) => {
+  const result = await TestdataService.createAppointments()
+  return res.json(result);
+});
+*/
 export default router;
+
+
