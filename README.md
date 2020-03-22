@@ -1,5 +1,3 @@
-covidTest
-
 ## Details
 https://devpost.com/software/streamlining-and-facilitation-of-test-stations#updates
 
