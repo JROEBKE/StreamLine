@@ -59,24 +59,26 @@ export class TeststationService {
 
   }
 
-  public static findNearByAndSpare(lat: number, lon: number): Promise<Teststation[]> {
+  public static findNearByAndSpare(lat: number, lon: number, offset: number=0): Promise<Teststation[]> {
+    let offsetStatement = offset + ' day'
+    console.log(offsetStatement)
     return sequelize.query(`
     SELECT
-      teststations.*,  COUNT(appointments.teststation) as appointments
+       teststations.*,  COUNT(appointments.teststation) as appointments
     FROM
       teststations
       LEFT JOIN appointments ON teststations.id = appointments.teststation
       AND
-      date(appointments.timeslot) = date(now())
+      date(appointments.timeslot) = date(NOW() + interval :offsetStatement)
     WHERE
-      ST_DistanceSphere(coordinates, ST_MakePoint(:lat,:lon)) <= 15 * 1000
+      ST_DistanceSphere(coordinates, ST_MakePoint(:lat, :lon)) <= 15 * 1000
     GROUP BY teststations.id, appointments.timeslot
     HAVING
-    COALESCE(date(appointments.timeslot),date(now())) = date(now())
+    COALESCE(date(appointments.timeslot),date(NOW() + interval :offsetStatement)) = date(NOW() + interval :offsetStatement)
     AND
     COUNT(appointments.teststation) < teststations.capacity
     `, {
-      replacements: { lat, lon },
+      replacements: { lat, lon, offsetStatement },
       type: "SELECT"
     }) as Promise<Teststation[]>
 
