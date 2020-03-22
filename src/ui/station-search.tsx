@@ -53,6 +53,7 @@ export class StationSearch extends React.Component<Props, State>  {
       pageState: PageStateFactory.ready()
     }
   }
+
   componentDidMount() {
     if (!navigator.geolocation) {
       this.setState({
@@ -76,7 +77,7 @@ export class StationSearch extends React.Component<Props, State>  {
       )
     ) {
       this.setState({pageState: PageStateFactory.loading()})
-      Axios.get(`/api/stations/nearByAndSpare/${location[0]}/${location[1]}}`).then(response => {
+      Axios.get(`/api/stations/nearByAndSpare/${location[0]}/${location[1]}`).then(response => {
         this.setState({
           stationsPerDay: response.data,
           pageState: PageStateFactory.success()
@@ -107,7 +108,7 @@ export class StationSearch extends React.Component<Props, State>  {
             <Placeholder style={{ height: 50, width: "100%"}}>
               <Placeholder.Image />
             </Placeholder>
-)        </Segment>
+        </Segment>
       case "ready":
       case "success": return <Segment>
         {
@@ -193,13 +194,12 @@ export class StationSearch extends React.Component<Props, State>  {
                              ...val
                            ]
                          },[] as ITeststation[])
-                                    .reduce((acc, val) => {
-                                      console.log(val)
-                                      return {
-                                        ...acc,
-                                        ...{[val.id]: val}
-                                      }
-                                    }, {} as {[id: string]: ITeststation})
+                        .reduce((acc, val) => {
+                          return {
+                            ...acc,
+                            ...{[val.id]: val}
+                          }
+                        }, {} as {[id: string]: ITeststation})
 
     return (<>
         <Header as='h2'>

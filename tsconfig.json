@@ -1,6 +1,6 @@
 {
   "awesomeTypescriptLoaderOptions": {
-    useCache: true
+    "useCache": true
   },
   "compilerOptions": {
     "baseUrl": "./",
