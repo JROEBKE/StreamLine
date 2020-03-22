@@ -76,13 +76,11 @@ export class TeststationService {
   }
 
 
-  //TODO sort by distance and workload
-
   public static findNearByAndSpare(lat: number, lon: number, offset: number=0): Promise<Teststation[]> {
     let offsetStatement = offset + ' day'
     return sequelize.query(`
       SELECT
-        distinct(teststations.*),  COUNT(appointments.teststation) as appointments
+        distinct(teststations.*),  COUNT(appointments.teststation) as appointments, ST_DistanceSphere(coordinates, ST_MakePoint(:lat, :lon)) as distance, COUNT(appointments.teststation)::decimal/teststations.capacity as capacityratio
       FROM
         teststations
         LEFT JOIN appointments ON teststations.id = appointments.teststation
@@ -95,6 +93,7 @@ export class TeststationService {
       COALESCE(date(appointments.timeslot),date(NOW() + interval :offsetStatement)) = date(NOW() + interval :offsetStatement)
       AND
       COUNT(appointments.teststation) < teststations.capacity
+      ORDER BY  distance asc, capacityratio asc
       `, {
       replacements: { lat, lon, offsetStatement },
       type: "SELECT"
@@ -109,7 +108,7 @@ export class TeststationService {
 
      return sequelize.query(`
       SELECT
-        teststations.*,  COUNT(appointments.teststation) as appointments
+        teststations.*,  COUNT(appointments.teststation) as appointments, COUNT(appointments.teststation)::decimal/teststations.capacity as capacityratio
       FROM
         teststations
         LEFT JOIN appointments ON teststations.id = appointments.teststation
@@ -118,6 +117,7 @@ export class TeststationService {
       WHERE
       teststations.id = :id
       GROUP BY teststations.id
+      ORDER BY capacityratio asc
       `, {
       replacements: { date, id },
       model: Teststation,
