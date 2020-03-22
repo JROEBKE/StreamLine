@@ -5,22 +5,10 @@ import {StationSearch} from "./station-search"
 
 export const App: React.FunctionComponent = _ => {
   return (<>
-    <Segment>
+    <Segment basic>
       <Container fluid className="">
-        <Menu>
-            <Menu.Item
-              name='home'
-            />
-            <Menu.Item
-              name='messages'
-            />
-            <Menu.Item
-              name='friends'
-            />
-            <Menu.Menu position='right'>
-              <Menu.Item>
-                <Input icon='search' placeholder='Search...' />
-              </Menu.Item>
+        <Menu inverted color="teal">
+          <Menu.Menu position='right'>
               <Menu.Item
                 name='logout'
               />
