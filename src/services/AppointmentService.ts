@@ -1,7 +1,5 @@
 import Appointment, { IAppointment } from "../entities/Appointment"
 import { v4 as UUID } from "uuid"
-import {sequelize} from "../Database"
-import QueryTypes from 'sequelize/types/lib/query-types'
 
 export class AppointmentService {
   /*
@@ -10,10 +8,9 @@ export class AppointmentService {
     *
     */
   public static create(appointment: IAppointment, stationId: string): Promise<Appointment> {
-
     const insertPayload: IAppointment = {
       ...appointment,
-      stationId: stationId,
+      teststation: stationId,
       id: UUID()
     }
     return Appointment.create(insertPayload)

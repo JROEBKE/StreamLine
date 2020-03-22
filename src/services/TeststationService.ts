@@ -1,7 +1,7 @@
 import Teststation, { ITeststation } from "../entities/Teststation"
 import { v4 as UUID } from "uuid"
 import {sequelize} from "../Database"
-import QueryTypes from 'sequelize/types/lib/query-types'
+import dayjs from "dayjs";
 
 export class TeststationService {
   /*
@@ -15,9 +15,9 @@ export class TeststationService {
       id: UUID(),
       coordinates: {
         type: "POINT",
-        coordinates: station.coordinates,        
+        coordinates: station.coordinates,
         crs: { "type": "name", "properties": { "name": "EPSG:4326"}}
-      }
+      } as any // TODO: yolo
     }
     return Teststation.create(insertPayload)
   }
@@ -56,15 +56,29 @@ export class TeststationService {
       mapToModel: true,
       type: "SELECT"
     })
+  }
 
+  public static async findNearByAndSpareForDateRange(lat: number, lon: number): Promise<{[index: string]: Teststation[]}> {
+    const DAYS = 7;
+    const result: {[index: string]: Teststation[]} = {}
+
+    const today = dayjs()
+
+    for(let i=0; i <= DAYS; i++) {
+      const appointments = await this.findNearByAndSpare(lat, lon, i)
+      const date = today.add(i, 'day')
+
+      result[date.format('YYYY-MM-DD')] = appointments
+    }
+
+    return result
   }
 
   public static findNearByAndSpare(lat: number, lon: number, offset: number=0): Promise<Teststation[]> {
     let offsetStatement = offset + ' day'
-    console.log(offsetStatement)
     return sequelize.query(`
     SELECT
-       teststations.*,  COUNT(appointments.teststation) as appointments
+      distinct(teststations.*),  COUNT(appointments.teststation) as appointments
     FROM
       teststations
       LEFT JOIN appointments ON teststations.id = appointments.teststation

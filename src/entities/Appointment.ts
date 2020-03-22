@@ -6,7 +6,7 @@ import Teststation from './Teststation';
 
 export interface IAppointment{
   id: string
-  stationId: string
+  teststation: string
   timeslot: string
   // ToDo add creator as part of booking
   // creator: string
